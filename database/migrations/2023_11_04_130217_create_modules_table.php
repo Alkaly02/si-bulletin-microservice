@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBulletinsTable extends Migration
+class CreateModulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateBulletinsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bulletins', function (Blueprint $table) {
+        Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('trimestre_id')->references('id')->on('trimestres')->onDelete('cascade');
-            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
+            $table->string('name')->unique()->max('30');
+            $table->longText('description')->nullable()->max('1000');
+            $table->foreignId('domaine_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateBulletinsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bulletins');
+        Schema::dropIfExists('modules');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSousDomainesTable extends Migration
+class CreateBulletinsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateSousDomainesTable extends Migration
      */
     public function up()
     {
-        Schema::create('modules', function (Blueprint $table) {
+        Schema::create('bulletins', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique()->max('30');
-            $table->longText('description')->nullable()->max('1000');
-            $table->foreign('domaine_id')->references('id')->on('domaines')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('trimestre_id')->constrained()->onDelete('cascade');
+            $table->foreignId('module_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateSousDomainesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modules');
+        Schema::dropIfExists('bulletins');
     }
 }
